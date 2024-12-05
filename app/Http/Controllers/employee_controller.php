@@ -16,12 +16,16 @@ class employee_controller extends Controller
 
     {
         if(request()->ajax()){
-          $data = Employee::with('department')->orderBy('id', 'DESC')->get();
-        
+          $data = Employee::with(['department' //=> function($query) {       
+            //$query->where('status', 1); }
+            ])->whereHas('department', function ($query) {
+          $query->where('status', 1);
+      })->orderBy('id', 'DESC')->get();
+        // dd($data);
           return DataTables::of($data)
               ->addIndexColumn()
               ->addColumn('department_name', function($row) {                 
-                return $row->department->department_name ; 
+                return !empty($row->department) ? $row->department->department_name : "N/A" ; 
               })
                 ->addColumn('action', function($row){
                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
