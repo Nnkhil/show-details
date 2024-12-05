@@ -17,7 +17,7 @@ class employee_controller extends Controller
     {
         if(request()->ajax()){
           $data = Employee::with(['department' //=> function($query) {       
-            //$query->where('status', 1); }
+            // $query->where('status', 1); }
             ])->whereHas('department', function ($query) {
           $query->where('status', 1);
       })->orderBy('id', 'DESC')->get();
