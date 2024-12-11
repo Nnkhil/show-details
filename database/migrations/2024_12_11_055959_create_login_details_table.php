@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('departments', function (Blueprint $table) {
+        Schema::create('login_details', function (Blueprint $table) {
             $table->id();
-            $table->string('department_name');
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
-          
+            $table->timestamps();
         });
     }
 
@@ -25,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departments');
+        Schema::dropIfExists('login_details');
     }
 };

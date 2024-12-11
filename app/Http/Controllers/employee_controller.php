@@ -10,17 +10,21 @@ use App\Models\Employee_one;
 use App\Models\Post; 
 use App\Models\Comment;
 use DataTables; 
+use App\Jobs\AddPractice;
 class employee_controller extends Controller
 {
     public function show(){
 
     {
         if(request()->ajax()){
+          // die("hdgjhdf");
+          // dd("heelo");
           $data = Employee::with(['department' //=> function($query) {       
             // $query->where('status', 1); }
-            ])->whereHas('department', function ($query) {
-          $query->where('status', 1);
-      })->orderBy('id', 'DESC')->get();
+            ])//->whereHas('department', function ($query) {
+         // $query->where('status', 1);
+      //})
+      ->orderBy('id', 'DESC')->get();
         // dd($data);
           return DataTables::of($data)
               ->addIndexColumn()
@@ -33,9 +37,23 @@ class employee_controller extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
+                
+                
         }
         return view('employee_detail');
     }
+    }
+
+    public function deleteUserByJob(){
+      $data = Employee::with(['department' //=> function($query) {       
+          // $query->where('status', 1); }
+          ])//->whereHas('department', function ($query
+      // $query->where('status', 1);
+    //})
+    ->orderBy('id', 'DESC')->get();
+        AddPractice::dispatch($data);
+        // return redirect(->
+        echo "completed!";
     }
 
     // public function delete($id){

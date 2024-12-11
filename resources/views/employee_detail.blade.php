@@ -5,6 +5,7 @@
 <div class="container mx-auto my-5" >
   <div class = "row p-3">
   <h2 class =" text-center p-3">Employee DETAILS</h2>
+  <a href="{{route("deleteByJob")}}">deleteUser</a>
     <table  id="myTable" class="table table-success table-striped">
       <thead>
     <tr>
